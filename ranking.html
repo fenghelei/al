@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>榜单 - Nemo社区</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">N</div>
+        <span>Nemo社区</span>
+      </a>
+      <div class="nav-menu">
+        <a href="index.html">精选</a>
+        <a href="circles.html">圈子</a>
+        <a href="ranking.html" class="active">榜单</a>
+        <a href="sites.html">优站</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="theme-toggle" title="切换主题">☾</button>
+        <button class="nav-icon-btn" title="搜索">🔍</button>
+        <a href="login.html" class="btn-secondary">登录</a>
+        <a href="register.html" class="btn-primary">注册</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 移动端菜单 -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">精选</a>
+    <a href="circles.html">圈子</a>
+    <a href="ranking.html" class="active">榜单</a>
+    <a href="sites.html">优站</a>
+    <div class="auth-buttons">
+      <a href="login.html" class="btn-secondary">登录</a>
+      <a href="register.html" class="btn-primary">注册</a>
+    </div>
+  </div>
+
+  <!-- 主内容区 -->
+  <div class="main-wrapper">
+    <div class="main-content ranking-wrap">
+      <div class="card">
+        <div class="tab-nav">
+          <button class="tab-item active" data-tab="tab-articles">📖 文章榜</button>
+          <button class="tab-item" data-tab="tab-bloggers">👤 博主榜</button>
+          <button class="tab-item" data-tab="tab-circles">👥 圈子榜</button>
+        </div>
+
+        <!-- 文章榜 -->
+        <div class="tab-content active" id="tab-articles">
+          <div class="ranking-list">
+            <div class="ranking-item">
+              <div class="ranking-rank top1">
+                <span class="trophy">🏆</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">2024年中端手机选购指南：2000-3000元价位谁最值得买？</a>
+                <div class="ranking-sub">
+                  <span>赵测评</span>
+                  <span>·</span>
+                  <span>数码科技</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">8,932</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top2">
+                <span class="trophy">🥈</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">2024年AI工具使用指南：提升效率的10款必备工具推荐</a>
+                <div class="ranking-sub">
+                  <span>李科技</span>
+                  <span>·</span>
+                  <span>数码科技</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">5,820</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top3">
+                <span class="trophy">🥉</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">独立游戏开发入门：一个人如何完成一款Steam游戏</a>
+                <div class="ranking-sub">
+                  <span>周游戏</span>
+                  <span>·</span>
+                  <span>游戏动漫</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">4,567</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">4</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">手机摄影进阶技巧：掌握这5个构图方法，照片质感翻倍</a>
+                <div class="ranking-sub">
+                  <span>吴摄影</span>
+                  <span>·</span>
+                  <span>摄影创作</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">3,789</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">5</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">从零搭建个人云盘：使用 Docker 部署 NextCloud 完整教程</a>
+                <div class="ranking-sub">
+                  <span>陈运维</span>
+                  <span>·</span>
+                  <span>编程开发</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">3,241</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">6</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">深入理解 JavaScript 事件循环机制：从宏任务到微任务的完整解析</a>
+                <div class="ranking-sub">
+                  <span>张小明</span>
+                  <span>·</span>
+                  <span>编程开发</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">2,341</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">7</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">产品经理必备的数据分析思维：从数据中发现用户需求</a>
+                <div class="ranking-sub">
+                  <span>孙产品</span>
+                  <span>·</span>
+                  <span>产品运营</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">2,145</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">8</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">极简主义设计的7个核心原则：让你的界面更高级</a>
+                <div class="ranking-sub">
+                  <span>王设计</span>
+                  <span>·</span>
+                  <span>设计创意</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,956</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">9</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">程序员副业指南：从接私活到打造被动收入的完整路径</a>
+                <div class="ranking-sub">
+                  <span>钱编程</span>
+                  <span>·</span>
+                  <span>职场交流</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,823</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">10</span>
+              </div>
+              <div class="ranking-info">
+                <a href="post.html" class="ranking-title">我的考研上岸经验分享：普通二本如何逆袭985</a>
+                <div class="ranking-sub">
+                  <span>郑学长</span>
+                  <span>·</span>
+                  <span>校园生活</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,654</div>
+                <div class="ranking-label">阅读</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 博主榜 -->
+        <div class="tab-content" id="tab-bloggers">
+          <div class="ranking-list">
+            <div class="ranking-item">
+              <div class="ranking-rank top1">
+                <span class="trophy">🏆</span>
+              </div>
+              <div class="ranking-blogger-avatar a1">赵</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">赵测评</a>
+                <div class="ranking-sub">
+                  <span>数码测评 / 开箱博主</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">12.8K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top2">
+                <span class="trophy">🥈</span>
+              </div>
+              <div class="ranking-blogger-avatar a2">李</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">李科技</a>
+                <div class="ranking-sub">
+                  <span>数码爱好者 / 科技评论</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">10.5K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top3">
+                <span class="trophy">🥉</span>
+              </div>
+              <div class="ranking-blogger-avatar a3">张</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">张小明</a>
+                <div class="ranking-sub">
+                  <span>前端开发 / 技术博主</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">8.6K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">4</span>
+              </div>
+              <div class="ranking-blogger-avatar a4">王</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">王设计</a>
+                <div class="ranking-sub">
+                  <span>UI设计师 / 创意总监</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">7.2K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">5</span>
+              </div>
+              <div class="ranking-blogger-avatar a5">陈</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">陈运维</a>
+                <div class="ranking-sub">
+                  <span>云原生 / DevOps</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">6.8K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">6</span>
+              </div>
+              <div class="ranking-blogger-avatar a1">吴</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">吴摄影</a>
+                <div class="ranking-sub">
+                  <span>摄影师 / 旅拍达人</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">5.9K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">7</span>
+              </div>
+              <div class="ranking-blogger-avatar a2">孙</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">孙产品</a>
+                <div class="ranking-sub">
+                  <span>产品经理 / 用户体验</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">5.1K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">8</span>
+              </div>
+              <div class="ranking-blogger-avatar a3">周</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">周游戏</a>
+                <div class="ranking-sub">
+                  <span>独立游戏开发者 / 游戏解说</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">4.7K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">9</span>
+              </div>
+              <div class="ranking-blogger-avatar a4">钱</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">钱编程</a>
+                <div class="ranking-sub">
+                  <span>全栈开发 / 自由职业</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">4.2K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">10</span>
+              </div>
+              <div class="ranking-blogger-avatar a5">郑</div>
+              <div class="ranking-info">
+                <a href="user.html" class="ranking-title">郑学长</a>
+                <div class="ranking-sub">
+                  <span>考研博主 / 学习方法</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">3.8K</div>
+                <div class="ranking-label">粉丝</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 圈子榜 -->
+        <div class="tab-content" id="tab-circles">
+          <div class="ranking-list">
+            <div class="ranking-item">
+              <div class="ranking-rank top1">
+                <span class="trophy">🏆</span>
+              </div>
+              <div class="ranking-circle-icon c1">编</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">编程综合</a>
+                <div class="ranking-sub">
+                  <span>分享编程技术，共同成长</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">3,240</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top2">
+                <span class="trophy">🥈</span>
+              </div>
+              <div class="ranking-circle-icon c2">搞</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">搞机综合</a>
+                <div class="ranking-sub">
+                  <span>手机刷机、系统折腾</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">2,856</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank top3">
+                <span class="trophy">🥉</span>
+              </div>
+              <div class="ranking-circle-icon c3">数</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">数码评测</a>
+                <div class="ranking-sub">
+                  <span>专业数码产品评测</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">2,134</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">4</span>
+              </div>
+              <div class="ranking-circle-icon c4">摄</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">摄影创作</a>
+                <div class="ranking-sub">
+                  <span>用镜头记录生活的美好</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,876</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">5</span>
+              </div>
+              <div class="ranking-circle-icon c5">游</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">游戏动漫</a>
+                <div class="ranking-sub">
+                  <span>ACG爱好者的聚集地</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,543</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">6</span>
+              </div>
+              <div class="ranking-circle-icon c6">校</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">校园生活</a>
+                <div class="ranking-sub">
+                  <span>记录青春的美好时光</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">1,234</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">7</span>
+              </div>
+              <div class="ranking-circle-icon c7">设</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">设计创意</a>
+                <div class="ranking-sub">
+                  <span>UI/平面/交互设计灵感</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">987</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">8</span>
+              </div>
+              <div class="ranking-circle-icon c8">职</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">职场交流</a>
+                <div class="ranking-sub">
+                  <span>职场经验分享与成长</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">876</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">9</span>
+              </div>
+              <div class="ranking-circle-icon c1">读</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">读书学习</a>
+                <div class="ranking-sub">
+                  <span>打造终身学习的习惯</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">765</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+
+            <div class="ranking-item">
+              <div class="ranking-rank">
+                <span class="num">10</span>
+              </div>
+              <div class="ranking-circle-icon c2">运</div>
+              <div class="ranking-info">
+                <a href="#" class="ranking-title">运动健身</a>
+                <div class="ranking-sub">
+                  <span>追求健康的生活方式</span>
+                </div>
+              </div>
+              <div class="ranking-data">
+                <div class="ranking-count">654</div>
+                <div class="ranking-label">成员</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="card sidebar-card">
+        <div class="card-header">
+          <span class="card-title">📊 榜单说明</span>
+        </div>
+        <div class="card-body">
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.8;">
+            文章榜根据近7天阅读量排序，每日更新；博主榜根据粉丝数与活跃度综合排序；圈子榜根据成员数量与发帖活跃度排序。
+          </p>
+        </div>
+      </div>
+
+      <div class="card sidebar-card">
+        <div class="card-header">
+          <span class="card-title">🔥 本周热议</span>
+        </div>
+        <div class="card-body">
+          <ul class="hot-article-list">
+            <li>
+              <span class="rank-num top1">1</span>
+              <div>
+                <a href="post.html" class="hot-article-title">AI大模型最新进展盘点</a>
+                <div class="hot-article-views">9,234 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num top2">2</span>
+              <div>
+                <a href="post.html" class="hot-article-title">新款旗舰手机对比评测</a>
+                <div class="hot-article-views">7,567 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num top3">3</span>
+              <div>
+                <a href="post.html" class="hot-article-title">前端框架2024年终总结</a>
+                <div class="hot-article-views">5,432 阅读</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 活跃博主 -->
+      <div class="card sidebar-card">
+        <div class="card-header">
+          <span class="card-title">⭐ 活跃博主</span>
+        </div>
+        <div class="card-body">
+          <ul class="active-blogger-list">
+            <li>
+              <span class="avatar lg a1">张</span>
+              <div class="blogger-info">
+                <div class="blogger-name">张小明</div>
+                <div class="blogger-desc">前端开发 / 技术博主</div>
+              </div>
+              <button class="btn-follow">+ 关注</button>
+            </li>
+            <li>
+              <span class="avatar lg a2">李</span>
+              <div class="blogger-info">
+                <div class="blogger-name">李科技</div>
+                <div class="blogger-desc">数码爱好者 / 评测人</div>
+              </div>
+              <button class="btn-follow">+ 关注</button>
+            </li>
+            <li>
+              <span class="avatar lg a3">王</span>
+              <div class="blogger-info">
+                <div class="blogger-name">王设计</div>
+                <div class="blogger-desc">UI设计师 / 创意总监</div>
+              </div>
+              <button class="btn-follow followed">已关注</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Nemo社区</h3>
+          <p>汇聚热爱技术与生活的创作者<br>分享知识，探索有趣的一切</p>
+        </div>
+        <div class="footer-col">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="index.html">精选文章</a></li>
+            <li><a href="circles.html">兴趣圈子</a></li>
+            <li><a href="ranking.html">社区榜单</a></li>
+            <li><a href="sites.html">精选优站</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>关于</h4>
+          <ul>
+            <li><a href="#">关于我们</a></li>
+            <li><a href="#">加入我们</a></li>
+            <li><a href="#">联系我们</a></li>
+            <li><a href="#">意见反馈</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>帮助</h4>
+          <ul>
+            <li><a href="#">新手指南</a></li>
+            <li><a href="#">社区规范</a></li>
+            <li><a href="#">常见问题</a></li>
+            <li><a href="#">隐私政策</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Nemo社区. All rights reserved. | <a href="#">京ICP备XXXXXXXX号</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
