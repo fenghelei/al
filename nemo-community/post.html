@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深入理解 JavaScript 事件循环机制 - Nemo社区</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">N</div>
+        <span>Nemo社区</span>
+      </a>
+      <div class="nav-menu">
+        <a href="index.html">精选</a>
+        <a href="circles.html">圈子</a>
+        <a href="ranking.html">榜单</a>
+        <a href="sites.html">优站</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="theme-toggle" title="切换主题">☾</button>
+        <button class="nav-icon-btn" title="搜索">🔍</button>
+        <a href="login.html" class="btn-secondary">登录</a>
+        <a href="register.html" class="btn-primary">注册</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 移动端菜单 -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">精选</a>
+    <a href="circles.html">圈子</a>
+    <a href="ranking.html">榜单</a>
+    <a href="sites.html">优站</a>
+    <div class="auth-buttons">
+      <a href="login.html" class="btn-secondary">登录</a>
+      <a href="register.html" class="btn-primary">注册</a>
+    </div>
+  </div>
+
+  <!-- 主内容区 -->
+  <div class="main-wrapper">
+    <div class="main-content">
+      <!-- 文章头部 -->
+      <div class="post-header">
+        <div class="post-author-bar">
+          <a href="user.html"><span class="avatar lg a1">张</span></a>
+          <div class="post-author-info">
+            <div class="post-author-name">
+              <a href="user.html">张小明</a>
+              <span class="vip-badge">VIP</span>
+            </div>
+            <div class="post-author-bio">前端开发工程师 / 技术博主 / 热爱开源</div>
+          </div>
+          <button class="btn-follow">+ 关注</button>
+        </div>
+        <h1 class="post-title">深入理解 JavaScript 事件循环机制：从宏任务到微任务的完整解析</h1>
+        <div class="post-meta">
+          <span>📅 2024年1月15日</span>
+          <span>📁 编程开发</span>
+          <span>👁 2,341 阅读</span>
+          <span>❤ 128 点赞</span>
+          <span>💬 36 评论</span>
+        </div>
+      </div>
+
+      <!-- 文章正文 -->
+      <div class="post-content">
+        <p>JavaScript 作为一门单线程语言，却能够处理异步操作，这背后的核心就是<strong>事件循环（Event Loop）</strong>机制。理解事件循环不仅是面试中的高频考点，更是我们写出高效、正确的异步代码的基础。</p>
+
+        <h2>一、为什么需要事件循环？</h2>
+        <p>JavaScript 最初被设计为浏览器中的脚本语言，主要用于处理用户交互、操作 DOM。如果 JavaScript 是多线程的，那么在一个线程修改 DOM 的同时另一个线程删除 DOM，就会产生复杂的同步问题。因此，JavaScript 选择了单线程的设计。</p>
+
+        <blockquote>
+          单线程意味着所有任务需要排队执行，前一个任务结束，后一个任务才会开始。但如果某个任务耗时很长（比如网络请求），后面的任务就必须等待，这会导致页面卡顿，用户体验极差。
+        </blockquote>
+
+        <p>为了解决这个问题，JavaScript 引入了异步机制，而事件循环就是实现异步的核心原理。</p>
+
+        <h2>二、调用栈与任务队列</h2>
+        <p>在理解事件循环之前，我们需要先了解两个重要的概念：<strong>调用栈（Call Stack）</strong>和<strong>任务队列（Task Queue）</strong>。</p>
+
+        <h3>2.1 调用栈</h3>
+        <p>调用栈是 JavaScript 执行代码的地方。当函数被调用时，它会被推入栈顶；当函数执行完毕时，它会从栈顶弹出。这是一个典型的"后进先出"（LIFO）结构。</p>
+
+        <pre><code>function foo() {
+  console.log('foo');
+  bar();
+}
+
+function bar() {
+  console.log('bar');
+}
+
+foo();
+console.log('global');</code></pre>
+
+        <p>上面这段代码的执行顺序是：</p>
+        <ul>
+          <li>全局执行上下文入栈，执行 <code>foo()</code></li>
+          <li><code>foo</code> 函数入栈，打印 'foo'，然后调用 <code>bar()</code></li>
+          <li><code>bar</code> 函数入栈，打印 'bar'，执行完毕出栈</li>
+          <li><code>foo</code> 函数执行完毕出栈</li>
+          <li>继续执行全局代码，打印 'global'</li>
+        </ul>
+
+        <h3>2.2 任务队列</h3>
+        <p>当遇到异步操作（如 setTimeout、网络请求、DOM 事件等）时，这些操作不会阻塞主线程，而是会在合适的时机将回调函数放入任务队列中，等待调用栈清空后执行。</p>
+
+        <h2>三、宏任务与微任务</h2>
+        <p>任务队列中的任务又分为两种：<strong>宏任务（MacroTask）</strong>和<strong>微任务（MicroTask）</strong>。它们的执行顺序是事件循环中最关键的部分。</p>
+
+        <h3>3.1 常见的宏任务</h3>
+        <ul>
+          <li>script（整体代码）</li>
+          <li>setTimeout / setInterval</li>
+          <li>I/O 操作</li>
+          <li>UI 渲染</li>
+          <li>setImmediate（Node.js）</li>
+        </ul>
+
+        <h3>3.2 常见的微任务</h3>
+        <ul>
+          <li>Promise.then / catch / finally</li>
+          <li>process.nextTick（Node.js）</li>
+          <li>queueMicrotask</li>
+          <li>MutationObserver</li>
+        </ul>
+
+        <h2>四、事件循环的执行顺序</h2>
+        <p>事件循环的执行规则可以概括为以下几点：</p>
+
+        <blockquote>
+          <ol>
+            <li>从宏任务队列中取出一个任务执行</li>
+            <li>执行过程中如果遇到微任务，将其加入微任务队列</li>
+            <li>当前宏任务执行完毕后，依次执行微任务队列中的所有任务</li>
+            <li>微任务全部执行完毕后，进行 UI 渲染（如果需要）</li>
+            <li>然后进入下一轮循环，从宏任务队列取下一个任务</li>
+          </ol>
+        </blockquote>
+
+        <p>简单来说就是：<strong>先执行一个宏任务，然后把所有微任务都执行完，再执行下一个宏任务</strong>。</p>
+
+        <pre><code>console.log('1');
+
+setTimeout(function() {
+  console.log('2');
+  Promise.resolve().then(function() {
+    console.log('3');
+  });
+}, 0);
+
+Promise.resolve().then(function() {
+  console.log('4');
+});
+
+console.log('5');</code></pre>
+
+        <p>让我们来分析一下这段代码的执行顺序：</p>
+        <ol>
+          <li>执行全局 script（宏任务），打印 '1'</li>
+          <li>遇到 setTimeout，将回调放入宏任务队列</li>
+          <li>遇到 Promise.then，将回调放入微任务队列</li>
+          <li>继续执行，打印 '5'</li>
+          <li>当前宏任务（script）执行完毕，开始执行微任务队列</li>
+          <li>执行 Promise 回调，打印 '4'</li>
+          <li>微任务队列清空，进入下一轮循环</li>
+          <li>执行 setTimeout 回调（宏任务），打印 '2'</li>
+          <li>遇到 Promise.then，放入微任务队列</li>
+          <li>当前宏任务执行完毕，执行微任务</li>
+          <li>执行 Promise 回调，打印 '3'</li>
+        </ol>
+
+        <p>所以最终的输出顺序是：<code>1, 5, 4, 2, 3</code></p>
+
+        <h2>五、Node.js 中的事件循环</h2>
+        <p>Node.js 中的事件循环与浏览器略有不同，它有更多的阶段，并且微任务的优先级也有所区别。Node.js 的事件循环分为6个阶段：</p>
+
+        <ul>
+          <li><strong>timers</strong>：执行 setTimeout 和 setInterval 的回调</li>
+          <li><strong>pending callbacks</strong>：执行延迟到下一个循环的 I/O 回调</li>
+          <li><strong>idle, prepare</strong>：仅内部使用</li>
+          <li><strong>poll</strong>：获取新的 I/O 事件</li>
+          <li><strong>check</strong>：执行 setImmediate 的回调</li>
+          <li><strong>close callbacks</strong>：执行关闭事件的回调</li>
+        </ul>
+
+        <p>在 Node.js 中，<code>process.nextTick</code> 的优先级高于 Promise，也就是说 nextTick 队列会在微任务队列之前执行。</p>
+
+        <h2>六、总结</h2>
+        <p>事件循环是 JavaScript 异步编程的核心机制。理解宏任务和微任务的执行顺序，能够帮助我们：</p>
+        <ul>
+          <li>写出更可预期的异步代码</li>
+          <li>快速定位异步相关的 bug</li>
+          <li>在面试中脱颖而出</li>
+          <li>更好地理解 Promise、async/await 等高级特性</li>
+        </ul>
+
+        <p>希望这篇文章能帮助你彻底理解 JavaScript 的事件循环机制。如果有任何疑问，欢迎在评论区留言讨论！</p>
+      </div>
+
+      <!-- 互动区 -->
+      <div class="post-actions">
+        <button class="action-btn" id="like-btn">
+          <span class="icon">👍</span>
+          <span class="count">128</span>
+          <span>点赞</span>
+        </button>
+        <button class="action-btn" id="fav-btn">
+          <span class="icon">⭐</span>
+          <span class="count">56</span>
+          <span>收藏</span>
+        </button>
+        <button class="action-btn">
+          <span class="icon">🔗</span>
+          <span>分享</span>
+        </button>
+      </div>
+
+      <!-- 评论区 -->
+      <div class="comments-section">
+        <h3 class="comments-title">评论 (36)</h3>
+        
+        <div class="comment-input-area">
+          <div class="avatar a1">我</div>
+          <div class="comment-input-wrap">
+            <textarea class="comment-textarea" placeholder="写下你的评论..."></textarea>
+            <div class="comment-submit-row">
+              <button class="comment-submit-btn">发布评论</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment-list">
+          <div class="comment-item">
+            <div class="avatar a2">李</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                李科技
+                <span class="comment-time">2天前</span>
+              </div>
+              <div class="comment-text">讲得太清楚了！之前一直搞不懂宏任务微任务的顺序，看完这篇文章终于明白了。特别是那个例子，一步步分析非常到位。</div>
+              <div class="comment-actions">
+                <button>👍 24</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-item">
+            <div class="avatar a3">王</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                王设计
+                <span class="comment-time">2天前</span>
+              </div>
+              <div class="comment-text">作为一个设计师，虽然平时写JS不多，但偶尔也要处理一些交互逻辑。这篇文章通俗易懂，收藏了以后慢慢看~</div>
+              <div class="comment-actions">
+                <button>👍 12</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-item">
+            <div class="avatar a4">陈</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                陈运维
+                <span class="comment-time">3天前</span>
+              </div>
+              <div class="comment-text">补充一点：Node.js 11 之后，timers 阶段的行为也和浏览器统一了，每执行一个 timer 回调就会清空微任务队列。在旧版本中是所有 timer 执行完才清空微任务的。</div>
+              <div class="comment-actions">
+                <button>👍 36</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-item">
+            <div class="avatar a5">赵</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                赵测评
+                <span class="comment-time">3天前</span>
+              </div>
+              <div class="comment-text">请问一下，async/await 也是基于微任务的吗？await 后面的代码是在微任务里执行吗？</div>
+              <div class="comment-actions">
+                <button>👍 8</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-item">
+            <div class="avatar a1">张</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                张小明
+                <span class="comment-time">3天前</span>
+              </div>
+              <div class="comment-text">是的，async/await 本质上是 Promise 的语法糖。await 后面的代码可以理解为被包裹在 Promise.then 中，所以属于微任务。</div>
+              <div class="comment-actions">
+                <button>👍 15</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-item">
+            <div class="avatar a6">孙</div>
+            <div class="comment-content">
+              <div class="comment-author">
+                孙产品
+                <span class="comment-time">5天前</span>
+              </div>
+              <div class="comment-text">虽然我是产品经理，但也会写点代码。技术文章能写得这么清晰易懂不容易，赞一个！</div>
+              <div class="comment-actions">
+                <button>👍 6</button>
+                <button>💬 回复</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <!-- 博主信息 -->
+      <div class="card sidebar-card">
+        <div class="card-body" style="text-align: center;">
+          <a href="user.html">
+            <div class="avatar xl a1" style="margin: 0 auto 12px;">张</div>
+          </a>
+          <h3 style="font-size: 16px; color: var(--text-primary); margin-bottom: 4px;">
+            <a href="user.html">张小明</a>
+          </h3>
+          <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px;">前端开发 / 技术博主</p>
+          <div style="display: flex; justify-content: space-around; margin-bottom: 14px; padding: 10px 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+            <div>
+              <div style="font-weight: 600; color: var(--text-primary);">128</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">文章</div>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--text-primary);">8.6K</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">粉丝</div>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--text-primary);">156</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">关注</div>
+            </div>
+          </div>
+          <button class="btn-primary" style="width: 100%;">+ 关注</button>
+        </div>
+      </div>
+
+      <!-- 博主热门文章 -->
+      <div class="card sidebar-card">
+        <div class="card-header">
+          <span class="card-title">📝 博主热门</span>
+        </div>
+        <div class="card-body">
+          <ul class="blogger-hot-list">
+            <li>
+              <span class="rank-num top1">1</span>
+              <div>
+                <a href="post.html" class="hot-article-title">深入理解 JavaScript 事件循环机制</a>
+                <div class="hot-article-views">2,341 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num top2">2</span>
+              <div>
+                <a href="post.html" class="hot-article-title">Vue3 组合式API最佳实践</a>
+                <div class="hot-article-views">1,956 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num top3">3</span>
+              <div>
+                <a href="post.html" class="hot-article-title">CSS Grid 布局完全指南</a>
+                <div class="hot-article-views">1,823 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num">4</span>
+              <div>
+                <a href="post.html" class="hot-article-title">TypeScript 高级类型技巧</a>
+                <div class="hot-article-views">1,543 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num">5</span>
+              <div>
+                <a href="post.html" class="hot-article-title">前端性能优化实战</a>
+                <div class="hot-article-views">1,234 阅读</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 相关推荐 -->
+      <div class="card sidebar-card">
+        <div class="card-header">
+          <span class="card-title">💡 相关推荐</span>
+        </div>
+        <div class="card-body">
+          <ul class="hot-article-list">
+            <li>
+              <span class="rank-num">1</span>
+              <div>
+                <a href="post.html" class="hot-article-title">Promise 源码级剖析与实现</a>
+                <div class="hot-article-views">2,134 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num">2</span>
+              <div>
+                <a href="post.html" class="hot-article-title">async/await 错误处理最佳实践</a>
+                <div class="hot-article-views">1,765 阅读</div>
+              </div>
+            </li>
+            <li>
+              <span class="rank-num">3</span>
+              <div>
+                <a href="post.html" class="hot-article-title">浏览器渲染原理详解</a>
+                <div class="hot-article-views">1,432 阅读</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>Nemo社区</h3>
+          <p>汇聚热爱技术与生活的创作者<br>分享知识，探索有趣的一切</p>
+        </div>
+        <div class="footer-col">
+          <h4>社区</h4>
+          <ul>
+            <li><a href="index.html">精选文章</a></li>
+            <li><a href="circles.html">兴趣圈子</a></li>
+            <li><a href="ranking.html">社区榜单</a></li>
+            <li><a href="sites.html">精选优站</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>关于</h4>
+          <ul>
+            <li><a href="#">关于我们</a></li>
+            <li><a href="#">加入我们</a></li>
+            <li><a href="#">联系我们</a></li>
+            <li><a href="#">意见反馈</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>帮助</h4>
+          <ul>
+            <li><a href="#">新手指南</a></li>
+            <li><a href="#">社区规范</a></li>
+            <li><a href="#">常见问题</a></li>
+            <li><a href="#">隐私政策</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Nemo社区. All rights reserved. | <a href="#">京ICP备XXXXXXXX号</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
